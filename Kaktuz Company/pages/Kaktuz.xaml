@@ -1,0 +1,33 @@
+﻿<Page x:Class="Kaktuz_Company.pages.Kaktuz"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kaktuz_Company.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Kaktuz">
+
+    <Grid Background="Aqua">
+
+        <Button Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="52" Width="52" Click="Button_Click"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="180,85,0,0" VerticalAlignment="Top" Click="Button_Click_1" RenderTransformOrigin="0.494,0"/>
+        <Button Content="Редактировать" HorizontalAlignment="Left" Margin="344,85,0,0" VerticalAlignment="Top"/>
+        <Grid>
+            <ListView Name="ListUsers" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="58,209,73,21" MouseDoubleClick="ListUsers_MouseDoubleClick">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=vid}" Width="140">Вид</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=origin}" Width="140">Происхождение</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=age}" Width="50">Возраст</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=value}" Width="100" >Цена</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=care_instuctions}" Width="250" >Инструкции по применению</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+
+
+    </Grid>
+</Page>

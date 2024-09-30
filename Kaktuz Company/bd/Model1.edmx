@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище kaktuscompanyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Awarded_Cactus">
+          <Key>
+            <PropertyRef Name="id_awarded" />
+          </Key>
+          <Property Name="id_awarded" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cactus" Type="int" />
+          <Property Name="id_exhibition" Type="int" />
+        </EntityType>
+        <EntityType Name="Cactus">
+          <Key>
+            <PropertyRef Name="id_cactus" />
+          </Key>
+          <Property Name="id_cactus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vid" Type="nvarchar" MaxLength="50" />
+          <Property Name="origin" Type="nvarchar" MaxLength="50" />
+          <Property Name="age" Type="int" />
+          <Property Name="value" Type="int" />
+          <Property Name="care_instuctions" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Exhibition">
+          <Key>
+            <PropertyRef Name="id_exhibition" />
+          </Key>
+          <Property Name="id_exhibition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="exhibition_date" Type="date" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="award" Type="nvarchar" MaxLength="50" />
+          <Property Name="comment" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="participant">
+          <Key>
+            <PropertyRef Name="id_participant" />
+          </Key>
+          <Property Name="id_participant" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cactus" Type="int" Nullable="false" />
+          <Property Name="id_exhibition" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Awarded_Cactus_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="0..1" />
+          <End Role="Awarded_Cactus" Type="Self.Awarded_Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Principal>
+            <Dependent Role="Awarded_Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Awarded_Cactus_Exhibition">
+          <End Role="Exhibition" Type="Self.Exhibition" Multiplicity="0..1" />
+          <End Role="Awarded_Cactus" Type="Self.Awarded_Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exhibition">
+              <PropertyRef Name="id_exhibition" />
+            </Principal>
+            <Dependent Role="Awarded_Cactus">
+              <PropertyRef Name="id_exhibition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participant_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="1" />
+          <End Role="participant" Type="Self.participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Principal>
+            <Dependent Role="participant">
+              <PropertyRef Name="id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participant_Exhibition">
+          <End Role="Exhibition" Type="Self.Exhibition" Multiplicity="1" />
+          <End Role="participant" Type="Self.participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exhibition">
+              <PropertyRef Name="id_exhibition" />
+            </Principal>
+            <Dependent Role="participant">
+              <PropertyRef Name="id_exhibition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище kaktuscompanyModelContainer">
+          <EntitySet Name="Awarded_Cactus" EntityType="Self.Awarded_Cactus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cactus" EntityType="Self.Cactus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exhibition" EntityType="Self.Exhibition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="participant" EntityType="Self.participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Awarded_Cactus_Cactus" Association="Self.FK_Awarded_Cactus_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="Awarded_Cactus" EntitySet="Awarded_Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Awarded_Cactus_Exhibition" Association="Self.FK_Awarded_Cactus_Exhibition">
+            <End Role="Exhibition" EntitySet="Exhibition" />
+            <End Role="Awarded_Cactus" EntitySet="Awarded_Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participant_Cactus" Association="Self.FK_participant_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="participant" EntitySet="participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participant_Exhibition" Association="Self.FK_participant_Exhibition">
+            <End Role="Exhibition" EntitySet="Exhibition" />
+            <End Role="participant" EntitySet="participant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="kaktuscompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Awarded_Cactus">
+          <Key>
+            <PropertyRef Name="id_awarded" />
+          </Key>
+          <Property Name="id_awarded" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cactus" Type="Int32" />
+          <Property Name="id_exhibition" Type="Int32" />
+          <NavigationProperty Name="Cactus" Relationship="Self.FK_Awarded_Cactus_Cactus" FromRole="Awarded_Cactus" ToRole="Cactus" />
+          <NavigationProperty Name="Exhibition" Relationship="Self.FK_Awarded_Cactus_Exhibition" FromRole="Awarded_Cactus" ToRole="Exhibition" />
+        </EntityType>
+        <EntityType Name="Cactus">
+          <Key>
+            <PropertyRef Name="id_cactus" />
+          </Key>
+          <Property Name="id_cactus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="origin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="value" Type="Int32" />
+          <Property Name="care_instuctions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Awarded_Cactus" Relationship="Self.FK_Awarded_Cactus_Cactus" FromRole="Cactus" ToRole="Awarded_Cactus" />
+          <NavigationProperty Name="participant" Relationship="Self.FK_participant_Cactus" FromRole="Cactus" ToRole="participant" />
+        </EntityType>
+        <EntityType Name="Exhibition">
+          <Key>
+            <PropertyRef Name="id_exhibition" />
+          </Key>
+          <Property Name="id_exhibition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="exhibition_date" Type="DateTime" Precision="0" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="award" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Awarded_Cactus" Relationship="Self.FK_Awarded_Cactus_Exhibition" FromRole="Exhibition" ToRole="Awarded_Cactus" />
+          <NavigationProperty Name="participant" Relationship="Self.FK_participant_Exhibition" FromRole="Exhibition" ToRole="participant" />
+        </EntityType>
+        <EntityType Name="participant">
+          <Key>
+            <PropertyRef Name="id_participant" />
+          </Key>
+          <Property Name="id_participant" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cactus" Type="Int32" Nullable="false" />
+          <Property Name="id_exhibition" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cactus" Relationship="Self.FK_participant_Cactus" FromRole="participant" ToRole="Cactus" />
+          <NavigationProperty Name="Exhibition" Relationship="Self.FK_participant_Exhibition" FromRole="participant" ToRole="Exhibition" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Awarded_Cactus_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="0..1" />
+          <End Role="Awarded_Cactus" Type="Self.Awarded_Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Principal>
+            <Dependent Role="Awarded_Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Awarded_Cactus_Exhibition">
+          <End Role="Exhibition" Type="Self.Exhibition" Multiplicity="0..1" />
+          <End Role="Awarded_Cactus" Type="Self.Awarded_Cactus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exhibition">
+              <PropertyRef Name="id_exhibition" />
+            </Principal>
+            <Dependent Role="Awarded_Cactus">
+              <PropertyRef Name="id_exhibition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participant_Cactus">
+          <End Role="Cactus" Type="Self.Cactus" Multiplicity="1" />
+          <End Role="participant" Type="Self.participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cactus">
+              <PropertyRef Name="id_cactus" />
+            </Principal>
+            <Dependent Role="participant">
+              <PropertyRef Name="id_cactus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_participant_Exhibition">
+          <End Role="Exhibition" Type="Self.Exhibition" Multiplicity="1" />
+          <End Role="participant" Type="Self.participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exhibition">
+              <PropertyRef Name="id_exhibition" />
+            </Principal>
+            <Dependent Role="participant">
+              <PropertyRef Name="id_exhibition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="kaktuscompanyEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Awarded_Cactus" EntityType="Self.Awarded_Cactus" />
+          <EntitySet Name="Cactus" EntityType="Self.Cactus" />
+          <EntitySet Name="Exhibition" EntityType="Self.Exhibition" />
+          <EntitySet Name="participant" EntityType="Self.participant" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Awarded_Cactus_Cactus" Association="Self.FK_Awarded_Cactus_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="Awarded_Cactus" EntitySet="Awarded_Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Awarded_Cactus_Exhibition" Association="Self.FK_Awarded_Cactus_Exhibition">
+            <End Role="Exhibition" EntitySet="Exhibition" />
+            <End Role="Awarded_Cactus" EntitySet="Awarded_Cactus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participant_Cactus" Association="Self.FK_participant_Cactus">
+            <End Role="Cactus" EntitySet="Cactus" />
+            <End Role="participant" EntitySet="participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_participant_Exhibition" Association="Self.FK_participant_Exhibition">
+            <End Role="Exhibition" EntitySet="Exhibition" />
+            <End Role="participant" EntitySet="participant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище kaktuscompanyModelContainer" CdmEntityContainer="kaktuscompanyEntities1">
+          <EntitySetMapping Name="Awarded_Cactus">
+            <EntityTypeMapping TypeName="kaktuscompanyModel.Awarded_Cactus">
+              <MappingFragment StoreEntitySet="Awarded_Cactus">
+                <ScalarProperty Name="id_awarded" ColumnName="id_awarded" />
+                <ScalarProperty Name="id_cactus" ColumnName="id_cactus" />
+                <ScalarProperty Name="id_exhibition" ColumnName="id_exhibition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cactus">
+            <EntityTypeMapping TypeName="kaktuscompanyModel.Cactus">
+              <MappingFragment StoreEntitySet="Cactus">
+                <ScalarProperty Name="id_cactus" ColumnName="id_cactus" />
+                <ScalarProperty Name="vid" ColumnName="vid" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="care_instuctions" ColumnName="care_instuctions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exhibition">
+            <EntityTypeMapping TypeName="kaktuscompanyModel.Exhibition">
+              <MappingFragment StoreEntitySet="Exhibition">
+                <ScalarProperty Name="id_exhibition" ColumnName="id_exhibition" />
+                <ScalarProperty Name="exhibition_date" ColumnName="exhibition_date" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="award" ColumnName="award" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="participant">
+            <EntityTypeMapping TypeName="kaktuscompanyModel.participant">
+              <MappingFragment StoreEntitySet="participant">
+                <ScalarProperty Name="id_participant" ColumnName="id_participant" />
+                <ScalarProperty Name="id_cactus" ColumnName="id_cactus" />
+                <ScalarProperty Name="id_exhibition" ColumnName="id_exhibition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="kaktuscompanyModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
